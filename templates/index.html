@@ -1,0 +1,78 @@
+<head>
+	<title>GEAR Flask Tracker</title>
+</head>
+<body>
+<div class="container">
+<div class="row">
+<div class="col-lg-8  offset-lg-2">
+<h2 class="mt-5">Flask-Based GEAR Tracking Software</h2>
+No client-side software required! (Besides installing a web browser.)
+
+<form method="post" action="{{ url_for('tasks') }}">
+<input type="submit" value="Stop Video" name="stop" />
+<input type="submit" value="Screenshot" name="click"/>
+<input type="submit" value="Activate Color-Based Tracking" name="grey" />
+<input type="submit" value="Negative" name="neg" />
+<input type="submit" value="Start/Stop Recording" name="rec" />
+</form>
+
+<form method="post" action="test">
+RedLow (0-255): <input type="range" min="0" max="255" step="1" name="slider1" id="slider1" value="0" />
+<br />
+GreenLow (0-255): <input type="range" min="0" max="255" name="slider2" id="slider2" value="0" />
+<br />
+BlueLow (0-255): <input type="range" min="0" max="255" name="slider3" id="slider3" value="0" /> 
+<br />
+RedHigh (0-255): <input type="range" min="0" max="255" name="slider4" id="slider4" value="255" /> 
+<br />
+GreenHigh (0-255): <input type="range" min="0" max="255" name="slider5" id="slider5" value="255" />
+<br />
+BlueHigh (0-255): <input type="range" min="0" max="255" name="slider6" id="slider6" value="255" /> 
+<br />
+<input type="submit" value="submit" />
+</form>
+<p>
+The program is currently using the following values:
+<br />
+RedLow:	{{ slider1 }}
+<br />
+GreenLow:	{{ slider2 }}
+<br />
+BlueLow:	{{ slider3 }}
+<br />
+RedHigh:	{{ slider4 }}
+<br />
+GreenHigh:	{{ slider5 }}
+<br />
+BlueHigh:	{{ slider6 }}
+</p>
+
+<img src="{{ url_for('video_feed') }}" height="80%">
+<h3 style="font-family:courier;">Instructions:</h3>
+<ol style="font-family:courier;">
+</div>
+</div>
+</div>
+<script>
+		/*
+		slider.oninput = function() {
+			if(this.value%5 == 0) {
+				output.innerHTML = this.value;
+			}
+		}
+		console.log({{ testvalue }})
+		//let monkey1 = ({{ testvalue }})
+		document.getElementById("slider1").value = 123;
+		console.log( document.getElementById("slider1").value)
+		//console.log(weightFactor1);
+		*/
+		//console.log(document.getElementById('slider1'));
+		document.getElementById('slider1').value = {{ slider1 }};
+		document.getElementById('slider2').value = {{ slider2 }};
+		document.getElementById('slider3').value = {{ slider3 }};
+		document.getElementById('slider4').value = {{ slider4 }};
+		document.getElementById('slider5').value = {{ slider5 }};
+		document.getElementById('slider6').value = {{ slider6 }};
+</script>
+</body>
+
