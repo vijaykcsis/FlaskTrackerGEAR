@@ -7,11 +7,11 @@ from threading import Thread
 
 global capture,rec_frame, grey, switch, neg, face, rec, out, sl1, sl2, sl3, sl4, sl5, sl6
 sl1=45
-sl2=0
-sl3=0
-sl4=255
-sl5=255
-sl6=255
+sl2=38
+sl3=64
+sl4=134
+sl5=150
+sl6=188
 capture=0
 grey=0
 neg=0
@@ -80,7 +80,7 @@ def gen_frames():  # generate frame by frame from camera
                 #tracker = cv2.TrackerCSRT_create()
                 #bbox = cv2.selectROI(frame, True)
 
-                print("SL1:", sl1); print("SL2:", sl2); print("SL3:", sl3); print("SL4:", sl4); print("SL5:", sl5); print("SL6:", sl6);
+                print("SL1:", int(sl1)); print("SL2:", sl2); print("SL3:", sl3); print("SL4:", sl4); print("SL5:", sl5); print("SL6:", sl6);
 
                 red_low = int(sl1)
                 green_low = int(sl2)
@@ -99,6 +99,20 @@ def gen_frames():  # generate frame by frame from camera
 
                 mask = cv2.inRange(hsv_frame, hsv_lowerbound, hsv_upperbound)
                 frame = cv2.bitwise_and(frame, frame, mask=mask)
+                cnts, hir = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+                if len(cnts) > 0:
+                  maxcontour = max(cnts, key=cv2.contourArea)
+                  M = cv2.moments(maxcontour)
+                  if M['m00'] > 0 and cv2.contourArea(maxcontour) > 1000:
+                    cx = int(M['m10']/M['m00'])
+                    cy = int(M['m01']/M['m00'])
+                    cv2.circle(frame, (cx, cy), 20, (255, 0, 0), -1)
+                    #cv2.circle(frame, (cx, cy), 20, (0, 128, 255), -1)
+                    cv2.circle(frame, (300, 700), 20, (0, 128, 255), -1)
+
+                    cv2.line(frame, (cx, cy), (300, 700), (0, 0, 255), 1)
+                    #cv2.line(frame, (color1_x, color1_y), (color2_x, color1_y), (0, 255, 0), 1)
+                    #cv2.line(frame, (color2_x, color2_y), (color2_x, color1_y), (255, 0, 0), 1)
 
 
             if(neg):
