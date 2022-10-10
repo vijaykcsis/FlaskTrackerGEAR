@@ -156,7 +156,7 @@ def tasks():
         if request.form.get('click') == 'Capture':
             global capture
             capture=1
-        elif  request.form.get('grey') == 'Activate Color-Based Tracking':
+        elif  request.form.get('grey') == 'Activate Tracker':
             global grey
             grey=not grey
         elif  request.form.get('neg') == 'Negative':
@@ -164,16 +164,14 @@ def tasks():
             neg=not neg
         elif  request.form.get('face') == 'Face Only':
             global face
-            face=not face 
+            face=not face
             if(face):
-                time.sleep(4)   
+                time.sleep(4)
         elif  request.form.get('stop') == 'Stop Video':
-            
             if(switch==1):
                 switch=0
                 camera.release()
                 cv2.destroyAllWindows()
-                
             else:
                 camera = cv2.VideoCapture(0)
                 switch=1
@@ -181,7 +179,7 @@ def tasks():
             global rec, out
             rec= not rec
             if(rec):
-                now=datetime.datetime.now() 
+                now=datetime.datetime.now()
                 fourcc = cv2.VideoWriter_fourcc(*'XVID')
                 out = cv2.VideoWriter('vid_{}.avi'.format(str(now).replace(":",'')), fourcc, 20.0, (640, 480))
                 #Start new thread for recording the video
@@ -212,9 +210,8 @@ def test():
           #return render_template('index.html')
       return render_template('index.html', slider1=sl1, slider2=sl2, slider3=sl3, slider4=sl4, slider5=sl5, slider6=sl6)
 
-
 if __name__ == '__main__':
     app.run()
-    
+
 camera.release()
 cv2.destroyAllWindows()
